@@ -35,7 +35,7 @@ import aiofiles
 import zipfile
 import shutil
 import ffmpeg
-from datetime import datetime  # <-- Added for live time
+from datetime import datetime  # <-- added for live time
 
 cyt = "https://graph.org/file/996d4fc24564509244988-a7d93d020c96973ba8.jpg"
 api_url = "http://master-api-v3.vercel.app/"
@@ -139,7 +139,7 @@ image_urls = [
     # Add more image URLs as needed
 ]
 random_image_url = random.choice(image_urls) 
-# Caption for the image
+# Caption for the image (updated to mention /upload)
 caption = (
         "**ʜᴇʟʟᴏ👋**\n\n"
         "➠ **ɪ ᴀᴍ ᴛxᴛ ᴛᴏ ᴠɪᴅᴇᴏ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ.**\n"
@@ -147,11 +147,21 @@ caption = (
         "➠ **ғᴏʀ ɢᴜɪᴅᴇ sᴇɴᴅ /help."
 )
     
-# Start command handler (now responds to /start)
+# Start command handler (with error handling for photo)
 @bot.on_message(filters.command(["start"]))
 async def start_command(bot: Client, message: Message):
-    await bot.send_photo(chat_id=message.chat.id, photo=random_image_url, caption=caption, reply_markup=keyboard)
-    
+    try:
+        # Try to send the photo
+        await bot.send_photo(
+            chat_id=message.chat.id,
+            photo=random_image_url,
+            caption=caption,
+            reply_markup=keyboard
+        )
+    except Exception:
+        # If photo fails (e.g., WebpageMediaEmpty), send plain text
+        await message.reply_text(caption, reply_markup=keyboard)
+
 # Stop command handler (now /stop)
 @bot.on_message(filters.command("stop"))
 async def stop_handler(_, m: Message):
