@@ -101,9 +101,9 @@ async def sudo_command(bot: Client, message: Message):
 # INLINE KEYBOARD
 keyboard = InlineKeyboardMarkup(
     [
-        [InlineKeyboardButton("🇮🇳ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ🇮🇳", url="https://t.me/newstudent1885")],
-        [InlineKeyboardButton("🔔ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ🔔", url="https://t.me/+dXRSrF1762o5NmRl")],
-        [InlineKeyboardButton("🦋ғᴏʟʟᴏᴡ ᴜs🦋", url="https://t.me/+dXRSrF1762o5NmRl")]
+        [InlineKeyboardButton("🇮🇳ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ°𓏲кяιѕнηα⋆🌿", url="https://t.me/HelyByKeshav1_bot")],
+        [InlineKeyboardButton("🔔ᴜᴘᴅᴀᴛᴇ ᴄʜᴀɴɴᴇʟ", url="https://t.me/HelyByKeshav1_bot")],
+        [InlineKeyboardButton("🦋ғᴏʟʟᴏᴡ ᴜs", url="https://t.me/HelyByKeshav1_bot")]
     ]
 )
 
@@ -135,7 +135,7 @@ random_image_url = random.choice(image_urls)
 def get_start_caption(user):
     name = user.first_name if user.first_name else user.username or "User"
     return (
-        f"**ʜᴇʟʟᴏ👋 {name}**\n\n"
+        f"**ʜᴇʟʟᴏ👋 {name} welcome to°𓏲кяιѕнηα⋆🌿 bot**\n\n"
         f"➠ **ɪ ᴀᴍ ᴛxᴛ ᴛᴏ ᴠɪᴅᴇᴏ ᴜᴘʟᴏᴀᴅᴇʀ ʙᴏᴛ**\n"
         f"➠ **ғᴏʀ ᴜsᴇ ᴍᴇ sᴇɴᴅ /upload**\n"
         f"➠ **ғᴏʀ ɢᴜɪᴅᴇ sᴇɴᴅ /help**"
@@ -168,7 +168,7 @@ async def restart_handler(_, m):
     if not is_authorized(m.from_user.id):
         await m.reply_text("**🚫 You are not authorized to use this command.**")
         return
-    await m.reply_text("🔮Restarted🔮", True)
+    await m.reply_text("Restarted🍁", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
 # -------------------------------------------------------------------
@@ -186,11 +186,11 @@ async def list_users(client: Client, msg: Message):
 @bot.on_message(filters.command("help"))
 async def help_command(client: Client, msg: Message):
     help_text = (
-        "`/start` - Start the bot⚡\n\n"
+        "`/start` - Start the bot\n\n"
         "`/upload` - Download and upload files (sudo)🎬\n\n"
-        "`/restart` - Restart the bot🔮\n\n" 
-        "`/stop` - Stop ongoing process🛑\n\n"
-        "`/sudo add` - Add user or group or channel (owner)🎊\n\n"
+        "`/restart` - Restart the bot\n\n" 
+        "`/stop` - Stop ongoing process\n\n"
+        "`/sudo add` - Add user or group or channel (owner)\n\n"
         "`/sudo remove` - Remove user or group or channel (owner)❌\n\n"
         "`/userlist2` - List of sudo user or group or channel📜\n\n"  
     )
@@ -255,11 +255,11 @@ async def upload(bot: Client, m: Message):
         arg = int(raw_text)
     except:
         arg = 1
-    await editable.edit("📚 𝗘𝗻𝘁𝗲𝗿 𝗬𝗼𝘂𝗿 𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 📚\n\n🦠 𝗦𝗲𝗻𝗱 `1` 𝗙𝗼𝗿 𝗨𝘀𝗲 𝗗𝗲𝗳𝗮𝘂𝗹𝘁 🦠")
+    await editable.edit("📚 𝗘𝗻𝘁𝗲𝗿 𝗬𝗼𝘂𝗿 𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 📚\n\n🦠 𝗦𝗲𝗻𝗱 `/d` 𝗙𝗼𝗿 𝗨𝘀𝗲 𝗗𝗲𝗳𝗮𝘂𝗹𝘁 🦠")
     input1: Message = await bot.listen(editable.chat.id)
     raw_text0 = input1.text
     await input1.delete(True)
-    if raw_text0 == '1':
+    if raw_text0 == '/d':
         b_name = file_name
     else:
         b_name = raw_text0
@@ -286,13 +286,13 @@ async def upload(bot: Client, m: Message):
     except Exception:
             res = "UN"
 
-    await editable.edit("📛 𝗘𝗻𝘁𝗲𝗿 𝗬𝗼𝘂𝗿 𝗡𝗮𝗺𝗲 📛\n\n🐥 𝗦𝗲𝗻𝗱 `1` 𝗙𝗼𝗿 𝗨𝘀𝗲 𝗗𝗲𝗳𝗮𝘂𝗹𝘁 🐥")
+    await editable.edit("📛 𝗘𝗻𝘁𝗲𝗿 𝗬𝗼𝘂𝗿 𝗡𝗮𝗺𝗲 📛\n\n🐥 𝗦𝗲𝗻𝗱 `/d` 𝗙𝗼𝗿 𝗨𝘀𝗲 𝗗𝗲𝗳𝗮𝘂𝗹𝘁 🐥")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
     await input3.delete(True)
-    credit = "️[𝗧𝘂𝘀𝗵𝗮𝗿](https://t.me/newstudent1885)"
-    if raw_text3 == '1':
-        CR = '[𝗧𝘂𝘀𝗵𝗮𝗿](https://t.me/newstudent1885)'
+    credit = "️[°𓏲кяιѕнηα⋆🌿](https://t.me/HelyByKeshav1_bot)"
+    if raw_text3 == '/d':
+        CR = '[°𓏲кяιѕнηα⋆🌿](https://t.me/HelyByKeshav1_bot)'
     elif raw_text3:
         try:
             text, link = raw_text3.split(',')
@@ -302,16 +302,16 @@ async def upload(bot: Client, m: Message):
     else:
         CR = credit
    
-    await editable.edit("**𝗘𝗻𝘁𝗲𝗿 𝗣𝘄 𝗧𝗼𝗸𝗲𝗻 𝗙𝗼𝗿 𝗣𝘄 𝗨𝗽𝗹𝗼𝗮𝗱𝗶𝗻𝗴 𝗼𝗿 𝗦𝗲𝗻𝗱 `3` 𝗙𝗼𝗿 𝗢𝘁𝗵𝗲𝗿𝘀**")
+    await editable.edit("**𝗘𝗻𝘁𝗲𝗿 𝗣𝘄 𝗧𝗼𝗸𝗲𝗻 𝗙𝗼𝗿 𝗣𝘄 𝗨𝗽𝗹𝗼𝗮𝗱𝗶𝗻𝗴 𝗼𝗿 𝗦𝗲𝗻𝗱 `/d` 𝗙𝗼𝗿 𝗢𝘁𝗵𝗲𝗿𝘀**")
     input4: Message = await bot.listen(editable.chat.id)
     raw_text4 = input4.text
     await input4.delete(True)
-    if raw_text4 == 3:
+    if raw_text4 == /d:
         MR = token
     else:
         MR = raw_text4
     
-    await editable.edit("𝗡𝗼𝘄 𝗦𝗲𝗻𝗱 𝗧𝗵𝗲 𝗧𝗵𝘂𝗺𝗯 𝗨𝗿𝗹 𝗘𝗴 » https://graph.org/file/13a89d77002442255efad-989ac290c1b3f13b44.jpg\n\n𝗢𝗿 𝗜𝗳 𝗗𝗼𝗻'𝘁 𝗪𝗮𝗻𝘁 𝗧𝗵𝘂𝗺𝗯𝗻𝗮𝗶𝗹 𝗦𝗲𝗻𝗱 = 𝗻𝗼")
+    await editable.edit("𝗡𝗼𝘄 𝗦𝗲𝗻𝗱 𝗧𝗵𝗲 𝗧𝗵𝘂𝗺𝗯 𝗨𝗿𝗹 𝗘𝗴 » https://graph.org/file/13a89d77002442255efad-989ac290c1b3f13b44.jpg\n\n𝗢𝗿 𝗜𝗳 𝗗𝗼𝗻'𝘁 𝗪𝗮𝗻𝘁 𝗧𝗵𝘂𝗺𝗯𝗻𝗮𝗶𝗹 𝗦𝗲𝗻𝗱 = /d")
     input6 = message = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
     await input6.delete(True)
@@ -322,7 +322,7 @@ async def upload(bot: Client, m: Message):
         getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
         thumb = "thumb.jpg"
     else:
-        thumb == "no"
+        thumb == "/d"
     failed_count =0
     if len(links) == 1:
         count = 1
@@ -397,12 +397,12 @@ async def upload(bot: Client, m: Message):
 
             try:
                 live_time = datetime.now().strftime("%A, %d %B %Y • %I:%M %p")
-                cc = f'**[🎬] 𝗩𝗶𝗱_𝗜𝗱 : {str(count).zfill(3)}.\n\n\n☘️𝗧𝗶𝘁𝗹𝗲 𝗡𝗮𝗺𝗲 ➤ {name1}.({res}).𝔗𝔲𝔰𝔥𝔞𝔯.mkv\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
-                cyt = f'**[🎬] 𝗩𝗶𝗱_𝗜𝗱 : {str(count).zfill(3)}.\n\n\n☘️𝗧𝗶𝘁𝗹𝗲 𝗡𝗮𝗺𝗲 ➤ {name1}.({res}).𝔗𝔲𝔰𝔥𝔞𝔯.mp4\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
-                cpvod = f'**[🎬] 𝗩𝗶𝗱_𝗜𝗱 : {str(count).zfill(3)}.\n\n\n☘️𝗧𝗶𝘁𝗹𝗲 𝗡𝗮𝗺𝗲 ➤ {name1}.({res}).𝔗𝔲𝔰𝔥𝔞𝔯.mkv\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
-                cimg = f'**[📁] 𝗜𝗺𝗴_𝗜𝗱 : {str(count).zfill(3)}.\n\n\n☘️𝗧𝗶𝘁𝗹𝗲 𝗡𝗮𝗺𝗲 ➤ {name1}.𝔗𝔲𝔰𝔥𝔞𝔯.jpg\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
-                cczip = f'**[📁] 𝗣𝗱𝗳_𝗜𝗱 : {str(count).zfill(3)}.\n\n\n☘️𝗧𝗶𝘁𝗹𝗲 𝗡𝗮𝗺𝗲 ➤ {name1}.𝔗𝔲𝔰𝔥𝔞𝔯.zip\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
-                cc1 = f'**[📁] 𝗣𝗱𝗳_𝗜𝗱 : {str(count).zfill(3)}.\n\n\n☘️𝗧𝗶𝘁𝗹𝗲 𝗡𝗮𝗺𝗲 ➤ {name1}.𝔗𝔲𝔰𝔥𝔞𝔯.pdf\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cc = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).𝔗𝔲𝔰𝔥𝔞𝔯.mkv\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cyt = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).𝔗𝔲𝔰𝔥𝔞𝔯.mp4\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cpvod = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).𝔗𝔲𝔰𝔥𝔞𝔯.mkv\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cimg = f'**📁 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.𝔗𝔲𝔰𝔥𝔞𝔯.jpg\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cczip = f'**📁 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.𝔗𝔲𝔰𝔥𝔞𝔯.zip\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cc1 = f'**📁 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.𝔗𝔲𝔰𝔥𝔞𝔯.pdf\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
 
                 if "drive" in url:
                     try:
@@ -548,6 +548,6 @@ async def upload(bot: Client, m: Message):
                        f"▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n"
                        f"✅𝗦𝗧𝗔𝗧𝗨𝗦 » 𝗖𝗢𝗠𝗣𝗟𝗘𝗧𝗘𝗗`")
     await m.reply_text(f"<pre><code>📥𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤『{CR}』</code></pre>")
-    await m.reply_text(f"<pre><code>『😏𝗥𝗲𝗮𝗰𝘁𝗶𝗼𝗻 𝗞𝗼𝗻 𝗗𝗲𝗴𝗮😏』</code></pre>")
+    
 
 bot.run()
