@@ -306,7 +306,7 @@ async def upload(bot: Client, m: Message):
     input4: Message = await bot.listen(editable.chat.id)
     raw_text4 = input4.text
     await input4.delete(True)
-    if raw_text4 == /d:
+    if raw_text4 == '/d':
         MR = token
     else:
         MR = raw_text4
