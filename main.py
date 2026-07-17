@@ -320,12 +320,13 @@ async def upload(bot: Client, m: Message):
     await input6.delete(True)
     await editable.delete()
 
-    thumb = input6.text
+    thumb = raw_text6
     if thumb.startswith("http://") or thumb.startswith("https://"):
         getstatusoutput(f"wget '{thumb}' -O 'thumb.jpg'")
         thumb = "thumb.jpg"
     else:
-        thumb == "/d"
+        thumb = "no"  # use generated thumbnail
+
     failed_count =0
     if len(links) == 1:
         count = 1
@@ -386,13 +387,13 @@ async def upload(bot: Client, m: Message):
                 url =  f"{api_url}pw-dl?url={url}&token={token}&authorization={api_token}&q={raw_text2}"
 
             name1 = links[i][0].replace("\t", "").replace(":", "").replace("/", "").replace("+", "").replace("#", "").replace("|", "").replace("@", "").replace("*", "").replace(".", "").replace("https", "").replace("http", "").strip()
-            name = name1[:60]   # Remove trailing space (was: f'{name1[:60]} ')
+            name = name1[:60]   # Remove trailing space
 
+            # Force H.264 for streaming compatibility
             if "youtu" in url:
-                # Force H.264 for streaming
                 ytf = f"b[height<={raw_text2}][ext=mp4][vcodec^=avc1]/bv[height<={raw_text2}][ext=mp4][vcodec^=avc1]+ba[ext=m4a]/b[ext=mp4][vcodec^=avc1]"
             else:
-                ytf = f"b[height<={raw_text2}]/bv[height<={raw_text2}]+ba/b/bv+ba"
+                ytf = f"bv[height<={raw_text2}][ext=mp4][vcodec^=avc1]+ba[ext=m4a]/b[height<={raw_text2}][ext=mp4][vcodec^=avc1]/b"
 
             if "jw-prod" in url:
                 cmd = f'yt-dlp -o "{name}.mp4" "{url}"'
@@ -401,7 +402,7 @@ async def upload(bot: Client, m: Message):
 
             try:
                 live_time = datetime.now(IST).strftime("%A, %d %B %Y • %I:%M %p")
-                # Base captions (with .mp4 as placeholder; will be replaced dynamically)
+                # Base caption with .mp4 placeholder (will be replaced by actual extension)
                 cc_template = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mp4\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
                 cyt_template = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mp4\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
                 cpvod_template = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mp4\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
@@ -503,7 +504,6 @@ async def upload(bot: Client, m: Message):
                     filename = res_file
                     await prog.delete(True)
                     await emoji_message.delete()
-                    # Determine actual extension and set caption accordingly
                     ext = os.path.splitext(filename)[1] if filename else '.mp4'
                     cc_final = cc_template.replace('.mp4', ext) if ext else cc_template
                     await helper.send_vid(bot, m, cc_final, filename, thumb, name, prog)
@@ -513,7 +513,7 @@ async def upload(bot: Client, m: Message):
                 elif 'drmcdni' in url or 'drm/wv' in url:
                     emoji_message = await show_random_emojis(message)
                     remaining_links = len(links) - count
-                    Show = f"**🍁 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗜𝗡𝗚 🍁**\n\n**📝ɴᴀᴍᴇ » ** `{name}\n\n🔗ᴛᴏᴛᴀʟ ᴜʀʟ » {len(links)}\n\n🗂️ɪɴᴅᴇx » {str(count)}/{len(links)}\n\n🌐ʀᴇᴍᴀɪɴɪɴɢ ᴜʀʟ » {remaining_links}\n\n❄ǫᴜᴀʟɪᴛʏ » {res}`\n\n**🔗ᴜʀʟ » ** `{url}`\n\n🤖𝗕𝗢𝗧 𝗠𝗔𝗗𝗘 𝗕𝗬 ➤ °𓏲кяιѕнηα⋆🌿\n\n🫥दुनिया वो नहीं है जो दीखती है।"
+                    Show = f"**🍁 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗜𝗡𝗚 🍁**\n\n**📝ɴᴀᴍᴇ » ** `{name}\n\n🔗ᴛᴏᴛᴀʟ ᴜʀʟ » {len(links)}\n\n🗂️ɪɴᴅᴇx » {str(count)}/{len(links)}\n\n🌐ʀᴇᴍᴀɪɴɪɴɢ ᴜʀʟ » {remaining_links}\n\n❄ǫᴜᴀʟɪᴛʏ » {res}`\n\n**🔗ᴜʀʟ » ** `{url}`\n\n𝗕𝗢𝗧 𝗠𝗔𝗗𝗘 𝗕𝗬 ➤ °𓏲кяιѕнηα⋆🌿\n\n🫥दुनिया वो नहीं है जो दीखती है।"
                     prog = await m.reply_text(Show)
                     res_file = await helper.decrypt_and_merge_video(mpd, keys_string, path, name, raw_text2)
                     filename = res_file
@@ -528,7 +528,7 @@ async def upload(bot: Client, m: Message):
                 else:
                     emoji_message = await show_random_emojis(message)
                     remaining_links = len(links) - count
-                    Show = f"**🍁 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗜𝗡𝗚 🍁**\n\n**📝ɴᴀᴍᴇ » ** `{name}\n\n🔗ᴛᴏᴛᴀʟ ᴜʀʟ » {len(links)}\n\n🗂️ɪɴᴅᴇx » {str(count)}/{len(links)}\n\n🌐ʀᴇᴍᴀɪɴɪɴɢ ᴜʀʟ » {remaining_links}\n\n❄ǫᴜᴀʟɪᴛʏ » {res}`\n\n**🔗ᴜʀʟ » ** `{url}`\n\n🤖𝗕𝗢𝗧 𝗠𝗔𝗗𝗘 𝗕𝗬 ➤ °𓏲кяιѕнηα⋆🌿\n\n🫥दुनिया वो नहीं है जो दीखती है।"
+                    Show = f"**🍁 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗜𝗡𝗚 🍁**\n\n**📝ɴᴀᴍᴇ » ** `{name}\n\n🔗ᴛᴏᴛᴀʟ ᴜʀʟ » {len(links)}\n\n🗂️ɪɴᴅᴇx » {str(count)}/{len(links)}\n\n🌐ʀᴇᴍᴀɪɴɪɴɢ ᴜʀʟ » {remaining_links}\n\n❄ǫᴜᴀʟɪᴛʏ » {res}`\n\n**🔗ᴜʀʟ » ** `{url}`\n\n𝗕𝗢𝗧 𝗠𝗔𝗗𝗘 𝗕𝗬 ➤ °𓏲кяιѕнηα⋆🌿\n\n🫥दुनिया वो नहीं है जो दीखती है।"
                     prog = await m.reply_text(Show)
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
