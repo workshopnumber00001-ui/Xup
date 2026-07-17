@@ -35,7 +35,10 @@ import aiofiles
 import zipfile
 import shutil
 import ffmpeg
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
+
+# IST timezone (UTC +5:30)
+IST = timezone(timedelta(hours=5, minutes=30))
 
 cyt = "https://graph.org/file/996d4fc24564509244988-a7d93d020c96973ba8.jpg"
 api_url = "http://master-api-v3.vercel.app/"
@@ -383,10 +386,11 @@ async def upload(bot: Client, m: Message):
                 url =  f"{api_url}pw-dl?url={url}&token={token}&authorization={api_token}&q={raw_text2}"
 
             name1 = links[i][0].replace("\t", "").replace(":", "").replace("/", "").replace("+", "").replace("#", "").replace("|", "").replace("@", "").replace("*", "").replace(".", "").replace("https", "").replace("http", "").strip()
-            name = f'{name1[:60]} '
+            name = name1[:60]   # Remove trailing space (was: f'{name1[:60]} ')
 
             if "youtu" in url:
-                ytf = f"b[height<={raw_text2}][ext=mp4]/bv[height<={raw_text2}][ext=mp4]+ba[ext=m4a]/b[ext=mp4]"
+                # Force H.264 for streaming
+                ytf = f"b[height<={raw_text2}][ext=mp4][vcodec^=avc1]/bv[height<={raw_text2}][ext=mp4][vcodec^=avc1]+ba[ext=m4a]/b[ext=mp4][vcodec^=avc1]"
             else:
                 ytf = f"b[height<={raw_text2}]/bv[height<={raw_text2}]+ba/b/bv+ba"
 
@@ -396,10 +400,11 @@ async def upload(bot: Client, m: Message):
                 cmd = f'yt-dlp -f "{ytf}" "{url}" -o "{name}.mp4"'
 
             try:
-                live_time = datetime.now().strftime("%A, %d %B %Y • %I:%M %p")
-                cc = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mkv\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
-                cyt = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mp4\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
-                cpvod = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mkv\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                live_time = datetime.now(IST).strftime("%A, %d %B %Y • %I:%M %p")
+                # Base captions (with .mp4 as placeholder; will be replaced dynamically)
+                cc_template = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mp4\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cyt_template = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mp4\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
+                cpvod_template = f'**🎞️ 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.({res}).mp4\n\n\n🔗𝗩𝗶𝗱𝗲𝗼 𝗨𝗿𝗹 ➤ <a href="{url}">__Click Here to Watch Video__</a>\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
                 cimg = f'**📁 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.jpg\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
                 cczip = f'**📁 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.zip\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
                 cc1 = f'**📁 𝗜𝗱 : {str(count).zfill(3)}.\n\n\n📃𝗧𝗶𝘁𝗹𝗲 ➤ {name1}.pdf\n\n\n<pre><code>📚𝗕𝗮𝘁𝗰𝗵 𝗡𝗮𝗺𝗲 ➤ {b_name}</code></pre>\n\n\n📥 𝗘𝘅𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆 ➤  {CR}\n\n📅 {live_time}**'
@@ -471,7 +476,7 @@ async def upload(bot: Client, m: Message):
                             os.remove(f'{name}.jpg')
                 elif "youtu" in url:
                     try:
-                        await bot.send_photo(chat_id=m.chat.id, photo=photo, caption=cyt)
+                        await bot.send_photo(chat_id=m.chat.id, photo=photo, caption=cyt_template)
                         count += 1
                     except Exception as e:
                         await m.reply_text(str(e))
@@ -498,7 +503,10 @@ async def upload(bot: Client, m: Message):
                     filename = res_file
                     await prog.delete(True)
                     await emoji_message.delete()
-                    await helper.send_vid(bot, m, cc, filename, thumb, name, prog)
+                    # Determine actual extension and set caption accordingly
+                    ext = os.path.splitext(filename)[1] if filename else '.mp4'
+                    cc_final = cc_template.replace('.mp4', ext) if ext else cc_template
+                    await helper.send_vid(bot, m, cc_final, filename, thumb, name, prog)
                     count += 1
                     await asyncio.sleep(1)
                     continue
@@ -511,7 +519,9 @@ async def upload(bot: Client, m: Message):
                     filename = res_file
                     await prog.delete(True)
                     await emoji_message.delete()
-                    await helper.send_vid(bot, m, cc, filename, thumb, name, prog)
+                    ext = os.path.splitext(filename)[1] if filename else '.mp4'
+                    cc_final = cc_template.replace('.mp4', ext) if ext else cc_template
+                    await helper.send_vid(bot, m, cc_final, filename, thumb, name, prog)
                     count += 1
                     await asyncio.sleep(1)
                     continue
@@ -524,7 +534,9 @@ async def upload(bot: Client, m: Message):
                     filename = res_file
                     await prog.delete(True)
                     await emoji_message.delete()
-                    await helper.send_vid(bot, m, cc, filename, thumb, name, prog)
+                    ext = os.path.splitext(filename)[1] if filename else '.mp4'
+                    cc_final = cc_template.replace('.mp4', ext) if ext else cc_template
+                    await helper.send_vid(bot, m, cc_final, filename, thumb, name, prog)
                     count += 1
                     time.sleep(1)
             except Exception as e:
