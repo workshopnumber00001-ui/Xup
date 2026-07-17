@@ -157,13 +157,7 @@ def vid_info(info):
             try:   
                 if "RESOLUTION" not in i[2] and i[2] not in temp and "audio" not in i[2]:   
                     temp.append(i[2])   
-                       
-                    # temp.update(f'{i[2]}')   
-                    # new_info.append((i[2], i[0]))   
-                    #  mp4,mkv etc ==== f"({i[1]})"    
-                       
                     new_info.update({f'{i[2]}':f'{i[0]}'})   
-   
             except:   
                 pass   
     return new_info   
@@ -271,34 +265,42 @@ def time_name():
     current_time = now.strftime("%H%M%S")   
     return f"{date} {current_time}.mp4"   
    
-async def download_video(url,cmd, name):   
-    download_cmd = f'{cmd} -R 25 --fragment-retries 25 --external-downloader aria2c --downloader-args "aria2c: -x 16 -j 32" --cookies cookies.txt'   
-    global failed_counter   
-    print(download_cmd)   
-    logging.info(download_cmd)   
-    k = subprocess.run(download_cmd, shell=True)   
-    if "visionias" in cmd and k.returncode != 0 and failed_counter <= 10:   
-        failed_counter += 1   
-        await asyncio.sleep(1)   
-        await download_video(url, cmd, name)   
-    failed_counter = 0   
-    try:   
-        if os.path.isfile(name):   
-            return name   
-        elif os.path.isfile(f"{name}.webm"):   
-            return f"{name}.webm"   
-        name = name.split(".")[0]   
-        if os.path.isfile(f"{name}.mkv"):   
-            return f"{name}.mkv"   
-        elif os.path.isfile(f"{name}.mp4"):   
-            return f"{name}.mp4"   
-        elif os.path.isfile(f"{name}.mp4.webm"):   
-            return f"{name}.mp4.webm"   
-   
-        return name   
-    except FileNotFoundError as exc:   
-        return os.path.isfile.splitext[0] + "." + "mp4"   
-   
+# ================== UPDATED download_video ==================
+async def download_video(url, cmd, name):
+    download_cmd = f'{cmd} -R 25 --fragment-retries 25 --external-downloader aria2c --downloader-args "aria2c: -x 16 -j 32" --cookies cookies.txt'
+    global failed_counter
+    print(download_cmd)
+    logging.info(download_cmd)
+    k = subprocess.run(download_cmd, shell=True)
+    
+    if "visionias" in cmd and k.returncode != 0 and failed_counter <= 10:
+        failed_counter += 1
+        await asyncio.sleep(1)
+        return await download_video(url, cmd, name)
+    failed_counter = 0
+
+    # Remove any trailing spaces from name
+    name = name.strip()
+    
+    # List of possible file names that may have been created
+    possible_files = [name, f"{name}.mp4", f"{name}.mkv", f"{name}.webm", f"{name}.mp4.webm", f"{name}.m4a"]
+    for f in possible_files:
+        if os.path.isfile(f):
+            return f
+
+    # If not found, search for any file that starts with the base name
+    dir_path = os.path.dirname(name) or "."
+    base_name = os.path.basename(name)
+    for file in os.listdir(dir_path):
+        if file.startswith(base_name):
+            full_path = os.path.join(dir_path, file)
+            if os.path.isfile(full_path):
+                return full_path
+
+    # Last resort: return the original name (will likely fail later, but better than None)
+    return name
+# ============================================================
+
 async def send_doc(bot: Client, m: Message,cc,ka,cc1,prog,count,name):   
     reply = await m.reply_text(f"Uploading - `{name}`")   
     time.sleep(1)   
@@ -455,5 +457,3 @@ async def watermark_pdf(file_path, watermark_text):
     os.remove(file_path)
 
     return new_file_path
-       
-   
