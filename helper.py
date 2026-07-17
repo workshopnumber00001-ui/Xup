@@ -381,7 +381,7 @@ async def send_vid(bot: Client, m: Message,cc,filename,thumb,name,prog):
     emoji = get_next_emoji()
     subprocess.run(f'ffmpeg -i "{filename}" -ss 00:00:02 -vframes 1 "{filename}.jpg"', shell=True)   
     await prog.delete (True)   
-    reply = await m.reply_text(f"🚀🚀𝗨𝗣𝗟𝗢𝗔𝗗𝗜𝗡𝗚🚀🚀🚀** » `{name}`\n\n𝗕𝗢𝗧 𝗠𝗔𝗗𝗘 𝗕𝗬 ➤ °𓏲кяιѕнηα⋆🌿")   
+    reply = await m.reply_text(f"🚀🚀𝗨𝗣𝗟𝗢𝗔𝗗𝗜𝗡𝗚🚀🚀🚀** » `{name}`\n\n𝗕𝗢𝗧 𝗠𝗔𝗗𝗘 𝗕𝗬 ➤ Krishna ❤️‍🔥")   
     try:   
         if thumb == "no":   
             thumbnail = f"{filename}.jpg"   
@@ -397,7 +397,8 @@ async def send_vid(bot: Client, m: Message,cc,filename,thumb,name,prog):
    
     try:   
         await m.reply_video(filename,caption=cc, supports_streaming=True,height=720,width=1280,thumb=thumbnail,duration=dur, progress=progress_bar,progress_args=(reply,start_time))   
-    except Exception:   
+    except Exception as e:   
+        print(f"reply_video failed: {e}")   # log the error
         await m.reply_document(filename,caption=cc, progress=progress_bar,progress_args=(reply,start_time))   
     os.remove(filename)   
    
